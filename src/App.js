@@ -1,11 +1,5 @@
-//// "npx create-react-app" vs. "npm create-react-app"
-// "npx"; pakedi geçici olarak "download" eder. Sonrasında Otomatik olarak çalıştırır.
-// "npm"; pakedi kalıcı olarak "install" eder. Sonrasında Otomatik olarak çalıştırmaz.
-
-// React versiyon 17.0 itibariyle "component"larda "import React from "react"" yazmaya gerek yok.
-
 import "./App.css";
-import React, { useState } from "react";
+import { useState } from "react";
 
 function App() {
   const [events, setEvents] = useState([
@@ -14,6 +8,23 @@ function App() {
     { title: "race on moo moo farm", id: 3 }
   ]);
 
+  const handleClick = (id) => {
+    // setEvents(
+    //   events.filter((event) => {
+    //     return id !== event.id;
+    //   })
+    // );
+
+    // Yukarıda "setEvents()" içerisinde "events" current state'ini kullanıyoruz."setEvents()" ile güncellediğimiz "events", güncelleme gerçekleşmeden önce değişime uğrayabilir. Bu beklenmedik hatalara sebep olabilir. Bunun için "setEvents()"e state'in o anki değerini dönen bir fonksiyon yazmalıyız.
+    setEvents((prevEvents) => {
+      return prevEvents.filter((event) => {
+        return id !== event.id;
+      });
+    });
+
+    // Temel Kural; "state"i önceki değerine göre güncellememiz gerektiğinde, İlk olarak callback function ile önceki değere ulaşmak gerekir.
+  };
+
   return (
     <div>
       {events.map((event, index) => (
@@ -21,6 +32,7 @@ function App() {
           <h4>
             {index + 1} - {event.title}
           </h4>
+          <button onClick={() => handleClick(event.id)}>delete</button>
         </div>
       ))}
     </div>
