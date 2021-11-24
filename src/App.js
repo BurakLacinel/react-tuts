@@ -1,47 +1,14 @@
 import "./App.css";
-import { useState } from "react";
+import Title from "./components/Title";
 
-function App() {
-  const [showEvents, setShowEvents] = useState(true);
-  const [events, setEvents] = useState([
-    { title: "mario's birthday bash", id: 1 },
-    { title: "bowser's live stream", id: 2 },
-    { title: "race on moo moo farm", id: 3 }
-  ]);
-
-  const handleClick = (id) => {
-    setEvents((prevEvents) => {
-      return prevEvents.filter((event) => {
-        return event.id !== id;
-      });
-    });
-  };
+const App = () => {
+  const subtitle = "All the latest events in mario kingdom";
 
   return (
-    <div>
-      {showEvents && (
-        <div>
-          <button onClick={() => setShowEvents(false)}>hide events</button>
-        </div>
-      )}
-
-      {!showEvents && (
-        <div>
-          <button onClick={() => setShowEvents(true)}>show events</button>
-        </div>
-      )}
-
-      {showEvents &&
-        events.map((event, index) => (
-          <div key={index}>
-            <h4>
-              {index + 1} - {event.title}
-            </h4>
-            <button onClick={() => handleClick(event.id)}>Delete</button>
-          </div>
-        ))}
+    <div className="App">
+      <Title title="Events in Your Area" subtitle={subtitle} />
     </div>
   );
-}
+};
 
 export default App;
